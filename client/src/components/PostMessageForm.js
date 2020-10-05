@@ -52,7 +52,7 @@ const PostMessageForm = ({classes, ...props}) => {
             ButterToast.raise({
                 content: <Cinnamon.Crisp title="Post Box"
                     content="Submitted Successfully"
-                    schemas={Cinnamon.Crisp.SCHEMA_PURPLE}
+                    scheme={Cinnamon.Crisp.SCHEME_PURPLE}
                     icon={<AssignmentTurnedIn />}
                 />
             })

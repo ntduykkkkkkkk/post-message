@@ -25,7 +25,7 @@ const PostMessages = ({classes, ...props}) => {
                 content: <Cinnamon.Crisp 
                     title="Post Box"
                     content="Deleted Successfully"
-                    scheme={Cinnamon.SCHEMA_PURPLE}
+                    scheme={Cinnamon.Crisp.SCHEME_PURPLE}
                     icon={<DeleteSweep />}
                 />
             })

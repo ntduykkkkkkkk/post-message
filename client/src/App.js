@@ -4,6 +4,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 import { store } from './actions/store';
 import { Container, AppBar, Typography } from '@material-ui/core';
+import ButterToast,{ POS_RIGHT,POS_TOP } from "butter-toast";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Typography variant="h2" align="center">Post Box</Typography>
         </AppBar>
         <PostMessages />
+        <ButterToast position={{vertical:POS_TOP,horizontal:POS_RIGHT}}/>
       </Container>
     </Provider>
     
