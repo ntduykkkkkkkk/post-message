@@ -47,7 +47,7 @@ export const Delete = (id, onSuccess) => dispatch => {
         .then(res => {
             dispatch({
                 type: ACTION_TYPES.DELETE,
-                payload: res.data
+                payload: id
             })
             onSuccess()
         })
