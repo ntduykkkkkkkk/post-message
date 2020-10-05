@@ -1,8 +1,10 @@
-import { Grid, List, ListItem, ListItemText, Paper, withStyles, Typography, Divider} from '@material-ui/core';
+import { Grid, List, ListItem, ListItemText, Paper, withStyles, Typography, Divider, Button} from '@material-ui/core';
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/postMessage';
 import PostMessageForm from './PostMessageForm';
+import { DeleteSweep } from '@material-ui/icons';
+import ButterToast, { Cinnamon } from 'butter-toast';
 
 const styles = theme => ({
     paper: {
@@ -12,14 +14,31 @@ const styles = theme => ({
 })
 
 const PostMessages = ({classes, ...props}) => {
+    const [currentId, setCurrentId] = useState(0)
     useEffect(() => {
         props.fetchAllPostMessages()
     }, [])
+
+    const onDelete = id => {
+        const onSuccess = () => {
+            ButterToast.raise({
+                content: <Cinnamon.Crisp 
+                    title="Post Box"
+                    content="Deleted Successfully"
+                    scheme={Cinnamon.SCHEMA_PURPLE}
+                    icon={<DeleteSweep />}
+                />
+            })
+        }
+        if (window.confirm('Are you sure you want to delete this record?')) {
+            props.deletePostMessage(id, onSuccess)
+        }
+    }
     return (
         <Grid container>
             <Grid item xs={5}>
                 <Paper className={classes.paper}>
-                    <PostMessageForm />
+                    <PostMessageForm {...{ currentId, setCurrentId }}/>
                 </Paper>
             </Grid>
             <Grid item xs={7}>
@@ -36,6 +55,24 @@ const PostMessages = ({classes, ...props}) => {
                                                 </Typography>
                                                 <div>
                                                     {record.message}
+                                                </div>
+                                                <div className={classes.actionDiv}>
+                                                    <Button 
+                                                        variant="contained" 
+                                                        color="primary" 
+                                                        size="small" 
+                                                        className={classes.smMargin}
+                                                        onClick={() => setCurrentId(record._id)}>
+                                                        Edit
+                                                    </Button>
+                                                    <Button 
+                                                        variant="contained" 
+                                                        color="secondary" 
+                                                        size="small" 
+                                                        className={classes.smMargin}
+                                                        onClick={() => onDelete(record._id)}>
+                                                        Delete
+                                                    </Button>
                                                 </div>
                                             </ListItemText>
                                         </ListItem>
@@ -56,7 +93,8 @@ const mapStateToProps = state => ({
 })
 
 const mapActionToProps = {
-    fetchAllPostMessages: actions.fetchAll
+    fetchAllPostMessages: actions.fetchAll,
+    deletePostMessage: actions.Delete
 }
 
 export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(PostMessages));
