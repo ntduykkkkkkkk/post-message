@@ -1,5 +1,4 @@
 const express = require('express');
-const router = express.Router();
 const { PostMessage } = require('../models/postMessage');
 
 const create = async (req, res) => {
